@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cf.crs.mapper.userMapper">
+
+    <select id="checkUserName" parameterType="String" resultType="java.lang.Integer">
+        select count(*) from user where userName = #{userName} limit 1
+    </select>
+    <delete id="deleteUserByUserName" parameterType="String">
+        delete from user where userName=#{userName}
+    </delete>
+    <update id="selectIdByUserName" parameterType="String">
+            update user set nickName=#{nickName} where userName=#{userName}
+    </update>
+
+
+
+</mapper>

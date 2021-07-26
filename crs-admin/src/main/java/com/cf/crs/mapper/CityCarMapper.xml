@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cf.crs.mapper.CityCarMapper">
+
+    <sql id="insert">
+        (`rfid_id`,`day`,`cp_hm`,`jd`,`wd`,`sd`,`fx`,`gps_sj`,`gps_sj_long`,`gps_zt`,`matchStatus`)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.rfid_id},#{item.day},#{item.cp_hm},#{item.jd},#{item.wd},#{item.sd},#{item.fx},#{item.gps_sj},#{item.gps_sj_long},#{item.gps_zt},#{item.matchStatus})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        `cp_hm` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(cp_hm),`cp_hm`),
+        `jd` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(jd),`jd`),
+        `wd` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(wd),`wd`),
+        `sd` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(sd),`sd`),
+        `fx` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(fx),`fx`),
+        `gps_sj` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(gps_sj),`gps_sj`),
+        `matchStatus` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(matchStatus),`matchStatus`),
+        `gps_zt` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(gps_zt),`gps_zt`),
+        `gps_sj_long` = if(VALUES(gps_sj_long) > `gps_sj_long`,VALUES(gps_sj_long),`gps_sj_long`)
+    </sql>
+
+    <insert id="lhBatchInsert" parameterType="com.cf.crs.entity.CityCar">
+        INSERT INTO `city_car_lh`
+       <include refid="insert"></include>
+    </insert>
+
+    <insert id="hwBatchInsert" parameterType="com.cf.crs.entity.CityCar">
+        INSERT INTO `city_car_hw`
+       <include refid="insert"></include>
+    </insert>
+
+    <insert id="zfBatchInsert" parameterType="com.cf.crs.entity.CityCar">
+        INSERT INTO `city_car_zf`
+       <include refid="insert"></include>
+    </insert>
+
+
+</mapper>

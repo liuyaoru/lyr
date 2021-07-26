@@ -1,0 +1,170 @@
+spring:
+  #redis配置
+  redis:
+    database: 2
+    host: 127.0.0.1
+    port: 1371
+    password: '*&(*%QWaf4534!123dsg'
+    timeout: 20000ms  # 连接超时时长（毫秒）
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 10      # 连接池中的最大空闲连接
+        min-idle: 5       # 连接池中的最小空闲连接
+  #数据库配置
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          username: hbdev
+          password: 'Abc@12345'
+          url: jdbc:mysql://10.131.236.235:3306/hbzhyq?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          druid: # 以下参数针对每个库可以重新设置druid参数
+            initial-size: 10
+            max-active: 100
+            min-idle: 10
+            max-wait: 6000
+            pool-prepared-statements: true
+            max-pool-prepared-statement-per-connection-size: 20
+            time-between-eviction-runs-millis: 60000
+            min-evictable-idle-time-millis: 300000
+            #Oracle需要打开注释
+            #validation-query: SELECT 1 FROM DUAL
+            test-while-idle: true
+            test-on-borrow: false
+            test-on-return: false
+            stat-view-servlet:
+              enabled: true
+              url-pattern: /druid/*
+              #login-username: admin
+              #login-password: admin
+            filter:
+              stat:
+                log-slow-sql: true
+                slow-sql-millis: 1000
+                merge-sql: false
+              wall:
+                config:
+                  multi-statement-allow: true
+    #        orcale:
+    #          username: query
+    #          password: 888888
+    #          url: jdbc:oracle:thin:@192.168.3.35:1521/xhdb
+    #          driver-class-name: oracle.jdbc.OracleDriver
+    #          druid: # 以下参数针对每个库可以重新设置druid参数
+    #            initial-size: 10
+    #            max-active: 100
+    #            min-idle: 10
+    #            max-wait: 6000
+    #            pool-prepared-statements: true
+    #            max-pool-prepared-statement-per-connection-size: 20
+    #            time-between-eviction-runs-millis: 60000
+    #            min-evictable-idle-time-millis: 300000
+    #            #Oracle需要打开注释
+    #            #validation-query: SELECT 1 FROM DUAL
+    #            test-while-idle: true
+    #            test-on-borrow: false
+    #            test-on-return: false
+    #            stat-view-servlet:
+    #              enabled: true
+    #              url-pattern: /druid/*
+    #              #login-username: admin
+    #              #login-password: admin
+    #            filter:
+    #              stat:
+    #                log-slow-sql: true
+    #                slow-sql-millis: 1000
+    #                merge-sql: false
+    #              wall:
+    #                config:
+    #                  multi-statement-allow: true
+
+
+    #kafka
+  kafka:
+    consumer:
+      bootstrap-servers: 10.253.36.37:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest                       #最早未被消费的offset earliest
+      max-poll-records: 200                         #批量消费一次最大拉取的数据量
+      enable-auto-commit: false                         #是否开启自动提交
+      auto-commit-interval: 1000                        #自动提交的间隔时间
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
+      type: BATCH                                #是否开启批量消费，true表示批量消费
+      concurrency: 1                                  #设置消费的线程数
+      poll-timeout: 1500
+
+# 配置slq打印日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#vpn配置
+server:
+  url: http://10.131.238.214:8600
+  name: Server
+  apikey: bee831e2999162b8385c7d69f893aeb6
+
+check:
+  sql: # 考评sql配置
+    url: http://10.131.238.214:9090
+    sqlType: MYSQL-DB-server,PostgreSQL,MongoDB,Redis
+    apikey: 52cc03e28f71b3cd1f335888e08fddf1
+    middlewareType: Tomcat-server
+    seq: UrlSeq
+    monitor: UrlMonitor
+  server:
+    url: http://10.131.238.214:8600
+    name: Server
+    apikey: bee831e2999162b8385c7d69f893aeb6
+  order:
+    url: http://10.131.238.156:8800
+    apikey: 46B9174A-6CAB-4B90-B175-2C1A1B30D990
+client:
+  url: https://iam.szzhcg.com
+  client-id: apphub_oauth
+  client-secret: 0427f05a070d45169da2ad5aed47b8ed
+client2:
+  url: http://10.131.234.4
+  client-id: AD99K6JKABDFOP9C4908345F7439F8FF
+  client-secret: 2952002EB4BF6FAB92EF9686EC257D78
+  responseType: code
+  grant-type: authorization_code
+  clientgrant-type: client_credentials
+  redirectUri: http://10.131.238.6/login.html
+pageset:
+  currentPage: 1
+  everyPage: 20
+
+netmanagerclient:
+  apikey: bee831e2999162b8385c7d69f893aeb6
+  url: http://10.131.238.214:8600/api/json/admin/
+
+huaweiconfig:
+  username: hzzw55
+  password: Abc@123456
+  contentType: application/json
+  domaincode: 2861f7d83a784de9b18314e6a3062ef5
+  fromIndex: 1
+  toIndex: 1
+  url: https://11.131.64.41:18531/
+textmessage:
+  cpcode: AABFQO
+  key: 0fc4d892eac9fbb046c63b491c371cf5
+  workorderid: 158462
+  warningid: 158460
+  url: http://10.131.234.4/wocn/umcinterface/sendtempletmsg
+iotconfig:
+  app-id: xunhuanhuagong__io.basepoint.connectionmax.iot
+  iot-ip: 10.131.236.241:9776;10.131.236.76:9776
+  app-secret: MYTwx47by7b1JpBP6V9AVA==
+  topic: T_IOT_DEVICE_DATACHANGED__xunhuanhuagong
+  encrypt-transport: true
+  tags: Dxh_Test_Tag
+  business-id: DxhTestMQS

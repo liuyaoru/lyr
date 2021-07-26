@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cf.crs.mapper.DeptMapper">
+    <resultMap type="com.cf.crs.entity.Dept" id="SysDeptResult">
+        <id     property="dept_id"     column="dept_id"     />
+        <result property="parent_id"   column="parent_id"   />
+        <result property="ancestors"  column="ancestors"   />
+        <result property="dept_name"   column="dept_name"   />
+        <result property="leader"     column="leader"      />
+        <result property="email"      column="email"       />
+    </resultMap>
+    <sql id="selectDeptVo">
+        select d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.leader,d.email
+        from dept d
+    </sql>
+
+    <select id="selectDeptList"  resultMap="SysDeptResult">
+        <include refid="selectDeptVo"/>
+    </select>
+
+
+</mapper>
